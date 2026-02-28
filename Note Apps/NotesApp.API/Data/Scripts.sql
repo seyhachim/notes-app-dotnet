@@ -1,0 +1,24 @@
+CREATE DATABASE NotesApp;
+GO USE NotesApp;
+GO CREATE TABLE Users (
+        Id INT IDENTITY(1, 1) PRIMARY KEY,
+        Username NVARCHAR(50) NOT NULL,
+        Email NVARCHAR(100) NOT NULL,
+        Password NVARCHAR(255) NOT NULL,
+        CreatedAt DATETIME2 NOT NULL DEFAULT GETUTCDATE()
+    );
+CREATE UNIQUE INDEX UX_Users_Email ON Users(Email);
+CREATE UNIQUE INDEX UX_Users_Username ON Users(Username);
+CREATE TABLE Notes (
+    Id INT IDENTITY(1, 1) PRIMARY KEY,
+    UserId INT NOT NULL,
+    Title NVARCHAR(200) NOT NULL,
+    Content NVARCHAR(MAX) NOT NULL,
+    CreatedAt DATETIME2 NOT NULL DEFAULT GETUTCDATE(),
+    UpdatedAt DATETIME2 NOT NULL DEFAULT GETUTCDATE(),
+    CONSTRAINT FK_Notes_Users FOREIGN KEY (UserId) REFERENCES Users(Id) ON DELETE CASCADE
+);
+CREATE INDEX IX_Notes_UserId ON Notes(UserId);
+CREATE INDEX IX_Notes_UserId_CreatedAt ON Notes(UserId, CreatedAt DESC);
+CREATE INDEX IX_Notes_UserId_UpdatedAt ON Notes(UserId, UpdatedAt DESC);
+CREATE INDEX IX_Notes_UserId_Title ON Notes(UserId, Title);
