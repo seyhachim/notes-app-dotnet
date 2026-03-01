@@ -1,18 +1,18 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/authStore'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      redirect: '/notes', // root always redirects to notes
+      redirect: '/notes',
     },
     {
       path: '/login',
       name: 'login',
       component: () => import('@/views/auth/LoginView.vue'),
-      meta: { requiresGuest: true }, // logged-in users can't visit login page
+      meta: { requiresGuest: true },
     },
     {
       path: '/register',
@@ -24,15 +24,16 @@ const router = createRouter({
       path: '/notes',
       name: 'notes',
       component: () => import('@/views/notes/NotesView.vue'),
-      meta: { requiresAuth: true }, // must be logged in
+      meta: { requiresAuth: true },
     },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      component: () => import('@/views/NotFoundView.vue')
+    }
   ],
 })
 
-// ── Route Guard ───────────────────────────────────────────────────────────────
-// Runs before every navigation.
-// requiresAuth  → redirect to /login if not authenticated
-// requiresGuest → redirect to /notes if already authenticated
 router.beforeEach((to) => {
   const authStore = useAuthStore()
 
