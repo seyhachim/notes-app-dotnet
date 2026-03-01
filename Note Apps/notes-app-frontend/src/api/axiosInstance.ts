@@ -4,7 +4,7 @@ import axios from 'axios'
 // Base URL points to our ASP.NET backend.
 // Change the port if yours is different.
 const api = axios.create({
-  baseURL: 'http://localhost:5104/api',
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5104/api',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -27,12 +27,16 @@ api.interceptors.request.use((config) => {
 // If the API returns 401 (token expired or invalid),
 // clear the stored token and redirect to login.
 api.interceptors.response.use(
-  (response) => response, // pass successful responses straight through
+  (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem('token')
-      localStorage.removeItem('user')
-      window.location.href = '/login'
+      // Only redirect if we're NOT already on the login page
+      // Otherwise the login page handles the 401 itself
+      if (!window.location.pathname.includes('/login')) {
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
+        window.location.href = '/login'
+      }
     }
     return Promise.reject(error)
   },

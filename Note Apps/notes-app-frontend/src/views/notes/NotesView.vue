@@ -42,8 +42,8 @@
       </div>
 
       <!-- Loading -->
-      <div v-if="notesStore.isLoading" class="text-center py-16 text-gray-400">
-        Loading notes...
+      <div v-if="notesStore.isLoading" class="flex justify-center py-16">
+        <div class="w-8 h-8 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin" />
       </div>
 
       <!-- Error -->
@@ -53,15 +53,23 @@
 
       <!-- Empty State -->
       <div v-else-if="notesStore.notes.length === 0" class="text-center py-16">
-        <p class="text-4xl mb-4">📭</p>
-        <p class="text-gray-500 text-lg">No notes yet</p>
-        <p class="text-gray-400 text-sm mt-1">Click "+ New Note" to create your first one</p>
+        <template v-if="searchQuery">
+          <p class="text-4xl mb-4">🔍</p>
+          <p class="text-gray-500 text-lg">No notes match "{{ searchQuery }}"</p>
+          <p class="text-gray-400 text-sm mt-1">Try a different search term</p>
+        </template>
+        <template v-else>
+          <p class="text-4xl mb-4">📭</p>
+          <p class="text-gray-500 text-lg">No notes yet</p>
+          <p class="text-gray-400 text-sm mt-1">Click "+ New Note" to create your first one</p>
+        </template>
       </div>
 
       <!-- Notes Grid -->
       <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <div v-for="note in notesStore.notes" :key="note.id" class="bg-white border border-gray-200 rounded-xl p-5 hover:shadow-md
                  transition cursor-pointer group" @click="openEditModal(note)">
+
           <!-- Note Title -->
           <h3 class="font-semibold text-gray-900 mb-2 truncate">
             {{ note.title }}
@@ -105,7 +113,35 @@
 
     </main>
 
-    <!-- ── Modal ───────────────────────────────────────────────────────────── -->
+    <!-- ── Delete Confirm Modal ────────────────────────────────────────────── -->
+    <div v-if="showDeleteConfirm" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4">
+      <div class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6">
+
+        <div class="text-center">
+          <p class="text-4xl mb-4">🗑️</p>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">Delete Note</h3>
+          <p class="text-gray-500 text-sm mb-6">
+            Are you sure you want to delete this note? This cannot be undone.
+          </p>
+        </div>
+
+        <div class="flex gap-3">
+          <button @click="cancelDelete" class="flex-1 py-2.5 border border-gray-300 text-gray-700 text-sm
+                   font-medium rounded-lg hover:bg-gray-50 transition">
+            Cancel
+          </button>
+          <button @click="confirmDelete" :disabled="isDeleting" class="flex-1 py-2.5 bg-red-600 hover:bg-red-700 disabled:bg-red-400
+                   text-white text-sm font-medium rounded-lg transition
+                   disabled:cursor-not-allowed">
+            <span v-if="isDeleting">Deleting...</span>
+            <span v-else>Delete</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Create / Edit Modal ────────────────────────────────────────────── -->
     <div v-if="showModal" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4"
       @click.self="closeModal">
       <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg p-6">
@@ -136,7 +172,7 @@
 
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Content</label>
-            <textarea v-model="modalForm.content" placeholder="Write your note here..." required rows="6" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm
+            <textarea v-model="modalForm.content" placeholder="Write your note here..." rows="6" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm
                      focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
                      resize-none" />
           </div>
@@ -178,13 +214,18 @@ const searchQuery = ref('')
 const sortBy = ref('createdAt')
 const currentPage = ref(1)
 
-// ── Modal state ───────────────────────────────────────────────────────────────
+// ── Create/Edit Modal state ───────────────────────────────────────────────────
 const showModal = ref(false)
 const isEditing = ref(false)
 const editingId = ref<number | null>(null)
 const modalForm = ref({ title: '', content: '' })
 const modalError = ref<string | null>(null)
 const isSaving = ref(false)
+
+// ── Delete Confirm Modal state ────────────────────────────────────────────────
+const showDeleteConfirm = ref(false)
+const deletingId = ref<number | null>(null)
+const isDeleting = ref(false)
 
 // ── Load notes on mount ───────────────────────────────────────────────────────
 onMounted(() => loadNotes())
@@ -200,12 +241,11 @@ function loadNotes() {
 }
 
 // ── Watch for filter/sort/search changes ─────────────────────────────────────
-// Debounce search so we don't fire on every keystroke
 let searchTimeout: ReturnType<typeof setTimeout>
 watch(searchQuery, () => {
   clearTimeout(searchTimeout)
   searchTimeout = setTimeout(() => {
-    currentPage.value = 1  // reset to page 1 on new search
+    currentPage.value = 1
     loadNotes()
   }, 400)
 })
@@ -221,7 +261,7 @@ function changePage(page: number) {
   loadNotes()
 }
 
-// ── Modal helpers ─────────────────────────────────────────────────────────────
+// ── Create/Edit Modal helpers ─────────────────────────────────────────────────
 function openCreateModal() {
   isEditing.value = false
   editingId.value = null
@@ -261,14 +301,32 @@ async function handleSave() {
   }
 }
 
-async function handleDelete(id: number) {
-  // Simple confirm dialog — good enough for a take-home
-  if (!confirm('Delete this note?')) return
+// ── Delete actions ────────────────────────────────────────────────────────────
+function handleDelete(id: number) {
+  // Store which note the user wants to delete and show the confirm modal
+  deletingId.value = id
+  showDeleteConfirm.value = true
+}
+
+function cancelDelete() {
+  // User changed their mind — close modal and clear state
+  showDeleteConfirm.value = false
+  deletingId.value = null
+}
+
+async function confirmDelete() {
+  if (deletingId.value === null) return
+  isDeleting.value = true
 
   try {
-    await notesStore.deleteNote(id)
+    await notesStore.deleteNote(deletingId.value)
+    showDeleteConfirm.value = false
+    deletingId.value = null
   } catch {
-    alert('Failed to delete note.')
+    // Close the modal even on error — error handling can be improved later
+    showDeleteConfirm.value = false
+  } finally {
+    isDeleting.value = false
   }
 }
 
