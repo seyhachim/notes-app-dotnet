@@ -122,4 +122,4 @@ App runs on `http://localhost:5173`
 ⭐ Custom delete confirmation modal
 ⭐ Loading states + error states
 ⭐ Empty state UI
-⭐ Docker setup
+
