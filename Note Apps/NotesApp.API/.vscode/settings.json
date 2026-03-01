@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/65628b10-8bc1-4922-9ed3-b917c8e36b97/resourceGroups/my-rg-note-app/providers/Microsoft.Web/sites/my-app-backend",
+    "appService.deploySubpath": "publish"
+}
