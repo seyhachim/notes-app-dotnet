@@ -91,15 +91,15 @@ App runs on `http://localhost:5173`
 
 ## API Endpoints
 
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| POST | `/api/auth/register` | No | Register |
-| POST | `/api/auth/login` | No | Login, returns JWT |
-| GET | `/api/notes` | Yes | Get notes (search, sort, paginate) |
-| GET | `/api/notes/{id}` | Yes | Get one note |
-| POST | `/api/notes` | Yes | Create note |
-| PUT | `/api/notes/{id}` | Yes | Update note |
-| DELETE | `/api/notes/{id}` | Yes | Delete note |
+| Method | Endpoint             | Auth | Description                        |
+| ------ | -------------------- | ---- | ---------------------------------- |
+| POST   | `/api/auth/register` | No   | Register                           |
+| POST   | `/api/auth/login`    | No   | Login, returns JWT                 |
+| GET    | `/api/notes`         | Yes  | Get notes (search, sort, paginate) |
+| GET    | `/api/notes/{id}`    | Yes  | Get one note                       |
+| POST   | `/api/notes`         | Yes  | Create note                        |
+| PUT    | `/api/notes/{id}`    | Yes  | Update note                        |
+| DELETE | `/api/notes/{id}`    | Yes  | Delete note                        |
 
 ---
 
@@ -109,3 +109,17 @@ App runs on `http://localhost:5173`
 - All SQL queries use parameterized inputs — no SQL injection
 - Every note query is scoped to the logged-in user
 - Pagination runs at the database level with OFFSET / FETCH
+
+## Extra Things
+
+⭐ JWT authentication
+⭐ BCrypt password hashing
+⭐ Global exception middleware
+⭐ Pagination at database level
+⭐ Parameterized queries — SQL injection protection
+⭐ Route guard
+⭐ Axios interceptors
+⭐ Custom delete confirmation modal
+⭐ Loading states + error states
+⭐ Empty state UI
+⭐ Docker setup
