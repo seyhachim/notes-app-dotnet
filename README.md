@@ -2,6 +2,10 @@
 
 A full-stack notes app built with Vue 3 and ASP.NET Core.
 
+🔗 [https://notes-app-dotnet.vercel.app](https://notes-app-dotnet.vercel.app)
+
+Demo account — email: `admin@test.com` / password: `password`
+
 ---
 
 ## Tech Stack
@@ -10,12 +14,15 @@ A full-stack notes app built with Vue 3 and ASP.NET Core.
 
 **Frontend:** Vue 3, TypeScript, TailwindCSS, Pinia, Axios
 
+**Hosting:** Vercel (frontend), Azure App Service (backend), Azure SQL (database)
+
 ---
 
 ## Features
 
 - Register and login with JWT authentication
 - Create, edit, delete notes
+- Pin notes to the top
 - Search notes by title or content
 - Sort by date or title
 - Pagination
@@ -37,7 +44,6 @@ A full-stack notes app built with Vue 3 and ASP.NET Core.
 ### Backend
 
 1. Go to `NotesApp.API/appsettings.json` and update:
-
 ```json
 {
   "ConnectionStrings": {
@@ -53,13 +59,11 @@ A full-stack notes app built with Vue 3 and ASP.NET Core.
 ```
 
 2. Run the SQL schema against your SQL Server:
-
 ```
 NotesApp.API/Data/Scripts/schema.sql
 ```
 
 3. Start the API:
-
 ```bash
 cd NotesApp.API
 dotnet run
@@ -73,14 +77,12 @@ Swagger at `http://localhost:5104/swagger`
 ### Frontend
 
 1. Install dependencies:
-
 ```bash
 cd notes-app-frontend
 npm install
 ```
 
 2. Start the app:
-
 ```bash
 npm run dev
 ```
@@ -110,16 +112,19 @@ App runs on `http://localhost:5173`
 - Every note query is scoped to the logged-in user
 - Pagination runs at the database level with OFFSET / FETCH
 
+---
+
 ## Extra Things
 
-⭐ JWT authentication
-⭐ BCrypt password hashing
-⭐ Global exception middleware
-⭐ Pagination at database level
-⭐ Parameterized queries — SQL injection protection
-⭐ Route guard
-⭐ Axios interceptors
-⭐ Custom delete confirmation modal
-⭐ Loading states + error states
-⭐ Empty state UI
-
+⭐ JWT authentication  
+⭐ BCrypt password hashing  
+⭐ Global exception middleware  
+⭐ Pagination at database level  
+⭐ Parameterized queries — SQL injection protection  
+⭐ Route guard  
+⭐ Axios interceptors  
+⭐ Custom delete confirmation modal  
+⭐ Loading states + error states  
+⭐ Empty state UI  
+⭐ Pin notes  
+⭐ Hosted on Vercel (frontend) + Azure App Service (backend) + Azure SQL (database)
