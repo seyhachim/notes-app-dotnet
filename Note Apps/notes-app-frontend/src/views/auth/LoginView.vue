@@ -4,8 +4,7 @@
 
       <!-- Header -->
       <div class="text-center mb-8">
-        <h1 class="text-3xl font-bold text-gray-900">Notes App</h1>
-        <p class="text-gray-500 mt-2">Sign in to your account</p>
+        <h1 class="text-3xl font-bold text-gray-900">QuickNotes</h1>
       </div>
 
       <!-- Card -->
@@ -24,7 +23,7 @@
               Email
             </label>
             <input v-model="form.email" type="email" placeholder="you@example.com" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm
-                     focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                     focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent
                      transition" />
           </div>
 
@@ -33,16 +32,17 @@
               Password
             </label>
             <input v-model="form.password" type="password" placeholder="••••••••" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm
-                     focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                     focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent
                      transition" />
           </div>
+<p>Demo account: <span @click="fillAdmin" style="cursor:pointer; color:blue; text-decoration:underline">click here to fill</span></p>
 
           <!-- Submit -->
-          <button type="submit" :disabled="isLoading" class="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400
+          <button type="submit" :disabled="isLoading" class="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-400
                    text-white font-medium rounded-lg text-sm transition cursor-pointer
                    disabled:cursor-not-allowed">
-            <span v-if="isLoading">Signing in...</span>
-            <span v-else>Sign In</span>
+            <span class="text-lg" v-if="isLoading">Logging in...</span>
+            <span class="text-lg" v-else>Log In</span>
           </button>
 
         </form>
@@ -50,7 +50,7 @@
         <!-- Footer -->
         <p class="text-center text-sm text-gray-500 mt-6">
           Don't have an account?
-          <RouterLink to="/register" class="text-blue-600 hover:underline font-medium">
+          <RouterLink to="/register" class="text-emerald-600 hover:underline font-medium">
             Register
           </RouterLink>
         </p>
@@ -73,6 +73,11 @@ const form = ref({
   email: '',
   password: ''
 })
+
+function fillAdmin() {
+  form.value.email = 'admin@test.com'
+  form.value.password = 'password'
+}
 
 // UI state
 const isLoading = ref(false)

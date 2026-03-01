@@ -1,4 +1,4 @@
-# Notes App
+# Notes Application - Techbodia
 
 A full-stack notes app built with Vue 3 and ASP.NET Core.
 
@@ -22,12 +22,12 @@ Demo account — email: `admin@test.com` / password: `password`
 
 - Register and login with JWT authentication
 - Create, edit, delete notes
-- Pin notes to the top
 - Search notes by title or content
 - Sort by date or title
 - Pagination
 - Users can only see their own notes
 - Responsive UI
+- Pin notes to the top
 
 ---
 

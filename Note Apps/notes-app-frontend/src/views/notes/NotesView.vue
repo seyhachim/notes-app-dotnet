@@ -22,11 +22,11 @@
 
         <!-- Search -->
         <input v-model="searchQuery" type="text" placeholder="Search notes..." class="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg text-sm
-                 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent" />
 
         <!-- Sort -->
         <select v-model="sortBy" class="px-4 py-2.5 border border-gray-300 rounded-lg text-sm
-                 focus:outline-none focus:ring-2 focus:ring-blue-500
+                 focus:outline-none focus:ring-2 focus:ring-emerald-500
                  bg-white cursor-pointer">
           <option value="createdAt">Newest First</option>
           <option value="updatedAt">Recently Updated</option>
@@ -34,7 +34,7 @@
         </select>
 
         <!-- Create Button -->
-        <button @click="openCreateModal" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white
+        <button @click="openCreateModal" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white
                  text-sm font-medium rounded-lg transition whitespace-nowrap">
           + New Note
         </button>
@@ -43,7 +43,7 @@
 
       <!-- Loading -->
       <div v-if="notesStore.isLoading" class="flex justify-center py-16">
-        <div class="w-8 h-8 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin" />
+        <div class="w-8 h-8 border-4 border-emerald-200 border-t-emerald-600 rounded-full animate-spin" />
       </div>
 
       <!-- Error -->
@@ -167,13 +167,13 @@
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Title</label>
             <input v-model="modalForm.title" type="text" placeholder="Note title" required maxlength="200" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm
-                     focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                     focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent" />
           </div>
 
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Content</label>
             <textarea v-model="modalForm.content" placeholder="Write your note here..." rows="6" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm
-                     focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                     focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent
                      resize-none" />
           </div>
 
@@ -183,7 +183,7 @@
                      font-medium rounded-lg hover:bg-gray-50 transition">
               Cancel
             </button>
-            <button type="submit" :disabled="isSaving" class="flex-1 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400
+            <button type="submit" :disabled="isSaving" class="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-400
                      text-white text-sm font-medium rounded-lg transition
                      disabled:cursor-not-allowed">
               <span v-if="isSaving">Saving...</span>

@@ -29,7 +29,7 @@
               Username
             </label>
             <input v-model="form.username" type="text" placeholder="johndoe" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm
-                     focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                     focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent
                      transition" />
           </div>
 
@@ -38,7 +38,7 @@
               Email
             </label>
             <input v-model="form.email" type="email" placeholder="you@example.com" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm
-                     focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                     focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent
                      transition" />
           </div>
 
@@ -47,13 +47,13 @@
               Password
             </label>
             <input v-model="form.password" type="password" placeholder="••••••••" required minlength="6" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm
-                     focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                     focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent
                      transition" />
             <p class="text-xs text-gray-400 mt-1">Minimum 6 characters</p>
           </div>
 
           <!-- Submit -->
-          <button type="submit" :disabled="isLoading" class="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400
+          <button type="submit" :disabled="isLoading" class="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-400
                    text-white font-medium rounded-lg text-sm transition cursor-pointer
                    disabled:cursor-not-allowed">
             <span v-if="isLoading">Creating account...</span>
@@ -65,7 +65,7 @@
         <!-- Footer -->
         <p class="text-center text-sm text-gray-500 mt-6">
           Already have an account?
-          <RouterLink to="/login" class="text-blue-600 hover:underline font-medium">
+          <RouterLink to="/login" class="text-emerald-600 hover:underline font-medium">
             Sign in
           </RouterLink>
         </p>

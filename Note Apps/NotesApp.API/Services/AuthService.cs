@@ -21,12 +21,12 @@ public class AuthService(UserRepository userRepository, TokenService tokenServic
         // Business rule: email must be unique across all users
         var existingEmail = await userRepository.GetByEmailAsync(request.Email);
         if (existingEmail is not null)
-            throw new InvalidOperationException("Email is already in use.");
+            throw new InvalidOperationException("An account with this email already exists.");
 
         // Business rule: username must be unique across all users
         var existingUsername = await userRepository.GetByUsernameAsync(request.Username);
         if (existingUsername is not null)
-            throw new InvalidOperationException("Username is already taken.");
+            throw new InvalidOperationException("Username is alredy taken.");
 
         var user = new User
         {
@@ -67,7 +67,7 @@ public class AuthService(UserRepository userRepository, TokenService tokenServic
             BCrypt.Net.BCrypt.Verify(request.Password, user.Password);
 
         if (!passwordValid)
-            throw new UnauthorizedAccessException("Invalid email or password.");
+            throw new UnauthorizedAccessException("The email or password you entered is incorrect.");
 
         var token = tokenService.GenerateToken(user!);
 
