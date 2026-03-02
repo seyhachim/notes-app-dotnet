@@ -83,7 +83,7 @@
           <!-- Footer: date + delete -->
           <div class="flex items-center justify-between">
             <span class="text-xs text-gray-400">
-              {{ formatDate(note.updatedAt) }}
+              Updated {{ formatDate(note.updatedAt) }}
             </span>
             <button @click.stop="handleDelete(note.id)" class="text-xs text-red-400 hover:text-red-600 opacity-0 group-hover:opacity-100
                      transition font-medium">
@@ -177,6 +177,9 @@
                      resize-none" />
           </div>
 
+          <p class="text-xs text-gray-400 mt-1 text-right">
+            {{ modalForm.content.length }} characters
+          </p>
           <!-- Modal Actions -->
           <div class="flex gap-3 pt-2">
             <button type="button" @click="closeModal" class="flex-1 py-2.5 border border-gray-300 text-gray-700 text-sm
