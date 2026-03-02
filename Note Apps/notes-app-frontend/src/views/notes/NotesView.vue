@@ -4,7 +4,7 @@
     <!-- Navbar -->
     <nav class="bg-white border-b border-gray-200 px-6 py-4">
       <div class="max-w-4xl mx-auto flex items-center justify-between">
-        <h1 class="text-xl font-bold text-gray-900">📝 Notes</h1>
+        <h1 class="text-xl font-bold text-gray-900">Note Application - Techbodia</h1>
         <div class="flex items-center gap-4">
           <span class="text-sm text-gray-500">{{ authStore.user?.username }}</span>
           <button @click="handleLogout" class="text-sm text-red-500 hover:text-red-700 font-medium transition">
