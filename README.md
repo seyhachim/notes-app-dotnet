@@ -2,7 +2,7 @@
 
 A full-stack notes app built with Vue 3 and ASP.NET Core.
 
-🔗 [https://notes-app-dotnet.vercel.app](https://notes-app-dotnet.vercel.app)
+🔗 [https://seyhachim.github.io/notes-app-dotnet](https://seyhachim.github.io/notes-app-dotnet)
 
 Demo account — email: `admin@test.com` / password: `password`
 
