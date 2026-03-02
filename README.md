@@ -14,7 +14,7 @@ Demo account — email: `admin@test.com` / password: `password`
 
 **Frontend:** Vue 3, TypeScript, TailwindCSS, Pinia, Axios
 
-**Hosting:** Vercel (frontend), Azure App Service (backend), Azure SQL (database)
+**Hosting:** Github Page (frontend), Azure App Service (backend), Azure SQL (database)
 
 ---
 
@@ -126,5 +126,3 @@ App runs on `http://localhost:5173`
 ⭐ Custom delete confirmation modal  
 ⭐ Loading states + error states  
 ⭐ Empty state UI  
-⭐ Pin notes  
-⭐ Hosted on Vercel (frontend) + Azure App Service (backend) + Azure SQL (database)
